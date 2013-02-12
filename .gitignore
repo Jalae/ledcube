@@ -11,3 +11,11 @@
 *.lai
 *.la
 *.a
+
+#quartus
+*.bak
+Quartus\ Project/db/*
+
+#vim
+*.swp
+
