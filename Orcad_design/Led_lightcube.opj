@@ -1,0 +1,78 @@
+(ExpressProject "Led_lightcube"
+  (ProjectVersion "19981106")
+  (ProjectType "PCB")
+  (Folder "Design Resources"
+    (Folder "Library"
+      (File ".\library1.olb"
+        (Type "Schematic Library")))
+    (NoModify)
+    (File ".\led_lightcube.dsn"
+      (Type "Schematic Design"))
+    (BuildFileAddedOrDeleted "x")
+    (CompileFileAddedOrDeleted "x"))
+  (Folder "Outputs")
+  (Folder "Referenced Projects")
+  (PartMRUSelector
+    (R
+      (FullPartName "R.Normal")
+      (LibraryName "C:\CADENCE\SPB_16.5\TOOLS\CAPTURE\LIBRARY\DISCRETE.OLB")
+      (DeviceIndex "0"))
+    (2N3904
+      (FullPartName "2N3904.Normal")
+      (LibraryName "C:\CADENCE\SPB_16.5\TOOLS\CAPTURE\LIBRARY\TRANSISTOR.OLB")
+      (DeviceIndex "0"))
+    (AnodeDriver
+      (FullPartName "AnodeDriver.Normal")
+      (LibraryName "Z:\SENIORPROJECT\ORCAD_DESIGN\LIBRARY1.OLB")
+      (DeviceIndex "0"))
+    (PORTRIGHT-R
+      (LibraryName "C:\CADENCE\SPB_16.5\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (PORTRIGHT-L
+      (LibraryName "C:\CADENCE\SPB_16.5\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (74HC595
+      (FullPartName "74HC595.Normal")
+      (LibraryName
+         "C:\CADENCE\SPB_16.5\TOOLS\CAPTURE\LIBRARY\SHIFTREGISTER.OLB")
+      (DeviceIndex "0")))
+  (LastUsedLibraryBrowseDirectory "C:\Cadence\SPB_16.5\tools\capture\library")
+  (GlobalState
+    (FileView
+      (Path "Design Resources")
+      (Path "Design Resources"
+         "Z:\SENIORPROJECT\Orcad_design\led_lightcube.dsn")
+      (Path "Design Resources"
+         "Z:\SENIORPROJECT\Orcad_design\led_lightcube.dsn" "SCHEMATIC1")
+      (Path "Design Resources"
+         "Z:\SENIORPROJECT\Orcad_design\led_lightcube.dsn" "Design Cache")
+      (Path "Design Resources" "Library")
+      (Path "Design Resources" "Library" ".\library1.olb")
+      (Select "Design Resources" "Library" ".\library1.olb" "AnodeDriver"))
+    (HierarchyView)
+    (Doc
+      (Type "COrCapturePMDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 0 200 0 370"))
+      (Tab 0))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 2 3 -1 -1 -8 -30 50 1130 50 458")
+        (Scroll "-170 3")
+        (Zoom "100")
+        (Occurrence "/"))
+      (Path "Z:\SENIORPROJECT\ORCAD_DESIGN\LED_LIGHTCUBE.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "PAGE1"))
+    (Doc
+      (Type "COrPartDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 175 1492 175 689")
+        (PackageScroll "0 0")
+        (PackageZoom "1")
+        (PartPackage "Part")
+        (Scroll "2876 853")
+        (Zoom "553"))
+      (Path "Z:\SeniorProject\Orcad_design\LIBRARY1.OLB")
+      (Package "AnodeDriver"))))
