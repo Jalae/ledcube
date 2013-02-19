@@ -13,6 +13,16 @@
   (Folder "Outputs")
   (Folder "Referenced Projects")
   (PartMRUSelector
+    (PORTRIGHT-R
+      (LibraryName "C:\CADENCE\SPB_16.5\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (PORTRIGHT-L
+      (LibraryName "C:\CADENCE\SPB_16.5\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (LED
+      (FullPartName "LED.Normal")
+      (LibraryName "C:\CADENCE\SPB_16.5\TOOLS\CAPTURE\LIBRARY\DISCRETE.OLB")
+      (DeviceIndex "0"))
     (AnodeDriver
       (FullPartName "AnodeDriver.Normal")
       (LibraryName "Z:\SENIORPROJECT\ORCAD_DESIGN\LIBRARY1.OLB")
@@ -33,14 +43,8 @@
       (FullPartName "74HC595.Normal")
       (LibraryName
          "C:\CADENCE\SPB_16.5\TOOLS\CAPTURE\LIBRARY\SHIFTREGISTER.OLB")
-      (DeviceIndex "0"))
-    (PORTRIGHT-R
-      (LibraryName "C:\CADENCE\SPB_16.5\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
-      (DeviceIndex "0"))
-    (PORTRIGHT-L
-      (LibraryName "C:\CADENCE\SPB_16.5\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
       (DeviceIndex "0")))
-  (LastUsedLibraryBrowseDirectory "C:\Cadence\SPB_16.5\tools\capture\library")
+  (LastUsedLibraryBrowseDirectory "C:\CADENCE\SPB_16.5\TOOLS\CAPTURE\LIBRARY")
   (GlobalState
     (FileView
       (Path "Design Resources")
@@ -48,12 +52,12 @@
       (Path "Design Resources" ".\led_lightcube.dsn" "SCHEMATIC1")
       (Path "Design Resources" "Library")
       (Path "Design Resources" "Library" ".\library1.olb")
-      (Select "Design Resources" ".\led_lightcube.dsn" "SCHEMATIC1" "PAGE2"))
+      (Select "Design Resources" "Library" ".\library1.olb"))
     (HierarchyView)
     (Doc
       (Type "COrCapturePMDoc")
       (Frame
-        (Placement "44 2 3 -1 -1 -8 -30 0 200 0 370"))
+        (Placement "44 0 1 -1 -1 -8 -30 0 200 0 370"))
       (Tab 0))
     (Doc
       (Type "COrSchematicDoc")
@@ -64,7 +68,7 @@
         (Occurrence "/"))
       (Path "Z:\SENIORPROJECT\ORCAD_DESIGN\LED_LIGHTCUBE.DSN")
       (Schematic "SCHEMATIC1")
-      (Page "PAGE1"))
+      (Page "Anode Control"))
     (Doc
       (Type "COrSchematicDoc")
       (Frame
@@ -74,7 +78,17 @@
         (Occurrence "/"))
       (Path "Z:\SENIORPROJECT\ORCAD_DESIGN\LED_LIGHTCUBE.DSN")
       (Schematic "SCHEMATIC1")
-      (Page "PAGE2"))
+      (Page "Cathode Control / Main"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 2 3 -1 -1 -8 -30 175 1129 175 673")
+        (Scroll "-204 -7")
+        (Zoom "94")
+        (Occurrence "/"))
+      (Path "Z:\SENIORPROJECT\ORCAD_DESIGN\LED_LIGHTCUBE.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "LEDs"))
     (Doc
       (Type "COrPartDoc")
       (Frame
