@@ -48,23 +48,34 @@
   (GlobalState
     (FileView
       (Path "Design Resources")
-      (Path "Design Resources" ".\led_lightcube.dsn")
-      (Path "Design Resources" ".\led_lightcube.dsn" "SCHEMATIC1")
-      (Path "Design Resources" "Library")
-      (Path "Design Resources" "Library" ".\library1.olb")
-      (Select "Design Resources" "Library" ".\library1.olb"))
+      (Path "Design Resources"
+         "z:\seniorproject\orcad_design\led_lightcube.dsn")
+      (Path "Design Resources"
+         "z:\seniorproject\orcad_design\led_lightcube.dsn" "SCHEMATIC1")
+      (Path "Design Resources" "Library"))
     (HierarchyView)
     (Doc
       (Type "COrCapturePMDoc")
       (Frame
-        (Placement "44 0 1 -1 -1 -8 -30 0 200 0 370"))
+        (Placement "44 2 3 -1 -1 -8 -30 0 200 0 370"))
       (Tab 0))
+    (Doc
+      (Type "COrPartDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 175 1492 175 689")
+        (PackageScroll "0 0")
+        (PackageZoom "1")
+        (PartPackage "Part")
+        (Scroll "2876 853")
+        (Zoom "553"))
+      (Path "Z:\SENIORPROJECT\ORCAD_DESIGN\LIBRARY1.OLB")
+      (Package "AnodeDriver"))
     (Doc
       (Type "COrSchematicDoc")
       (Frame
         (Placement "44 0 1 -1 -1 -8 -30 50 1130 50 458")
-        (Scroll "0 60")
-        (Zoom "100")
+        (Scroll "-24 0")
+        (Zoom "84")
         (Occurrence "/"))
       (Path "Z:\SENIORPROJECT\ORCAD_DESIGN\LED_LIGHTCUBE.DSN")
       (Schematic "SCHEMATIC1")
@@ -82,22 +93,11 @@
     (Doc
       (Type "COrSchematicDoc")
       (Frame
-        (Placement "44 2 3 -1 -1 -8 -30 175 1129 175 673")
-        (Scroll "-204 -7")
-        (Zoom "94")
+        (Placement "44 0 1 -1 -1 -8 -30 175 1129 175 673")
+        (Scroll "0 0")
+        (Zoom "96")
         (Occurrence "/"))
       (Path "Z:\SENIORPROJECT\ORCAD_DESIGN\LED_LIGHTCUBE.DSN")
       (Schematic "SCHEMATIC1")
-      (Page "LEDs"))
-    (Doc
-      (Type "COrPartDoc")
-      (Frame
-        (Placement "44 0 1 -1 -1 -8 -30 175 1492 175 689")
-        (PackageScroll "0 0")
-        (PackageZoom "1")
-        (PartPackage "Part")
-        (Scroll "2876 853")
-        (Zoom "553"))
-      (Path "Z:\SENIORPROJECT\ORCAD_DESIGN\LIBRARY1.OLB")
-      (Package "AnodeDriver")))
+      (Page "LEDs")))
   (MPSSessionName "kehnin.dyer"))
