@@ -15,8 +15,14 @@
 #quartus
 *.bak
 Quartus\ Project/db/*
+Quartus\ Project/incremental_db/*
+Quartus\ Project/output_files/*
+*.jdi
+*.qsys_edit*
 
-#vim
+
+#temps
+~$*.docx
 *.swp
 
 #ORCAD
