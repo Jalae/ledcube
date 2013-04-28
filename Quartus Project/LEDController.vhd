@@ -66,7 +66,7 @@ begin
                                             nextState := disableOutput;
                                         else
                                             nextState := setAddress;
-													 end if;
+                                        end if;
                 when disableOutput =>   nextState := latchData;
                 when latchData     =>   nextState := enableOutput;
                 when enableOutput  =>   nextState := setAddress;
@@ -177,10 +177,12 @@ begin
     end process;
 
     counting: process(clock)
-    variable  reddata   : std_logic_vector (4 downto 0) := "00000";
-    variable  greendata : std_logic_vector (4 downto 0) := "00000";
-    variable  bluedata  : std_logic_vector (4 downto 0) := "00000";
+    variable reddata   : std_logic_vector (4 downto 0) := "00000";
+    variable greendata : std_logic_vector (4 downto 0) := "00000";
+    variable bluedata  : std_logic_vector (4 downto 0) := "00000";
+    variable address   : std_logic_vector (8 downto 0) := "000000000";
     begin
+        address := std_logic_vector(conv_unsigned(bitShiftCounter, 9));
         if(clock'event and clock = '0') then
             case(curState) is
                 when setAddress =>
@@ -231,13 +233,12 @@ begin
                                 else
                                     b_d       := '0';
                                 end if;
-                                if(std_logic_vector(conv_unsigned(bitShiftCounter, 10))(6 downto 3) = "1111") then
-										      if (std_logic_vector(conv_unsigned(bitShiftCounter, 10))(9 downto 7) =
-                                        std_logic_vector(conv_unsigned(bitShiftCounter, 10))(2 downto 0)) then
+                                if(address(6 downto 3) = "1111") then
+                                    if (address(9 downto 7) = address(2 downto 0)) then
                                         c_d := '1';
-											   else
-												    c_d := '0';
-												end if;
+                                    else
+                                        c_d := '0';
+                                    end if;
                                 else
                                     c_d := '0';
                                 end if;
@@ -245,11 +246,11 @@ begin
                 when clockHigh  =>
                                 bitShiftCounter := bitShiftCounter;
                                 if(bitShiftCounter = 511) then
-												if (iteration = 31) then
+                                                if (iteration = 31) then
                                         iteration := 0;
-												else
-												    iteration := iteration + 1;
-												end if;
+                                                else
+                                                    iteration := iteration + 1;
+                                                end if;
                                 else
                                     iteration := iteration;
                                 end if;
