@@ -9,13 +9,13 @@ entity DE0 is
         --//////////////////    Clock Input     ///////////////////
         CLOCK_50           : in    STD_logic;                      -- 50 MHz
         CLOCK_50_2         : in    STD_logic;                      -- 50 MHz
-        
+
         --//////////////////    Push Button     ///////////////////
         BUTTON             : in    STD_logic_vector (2 downto 0);  -- Pushbutton[2:0]
-        
+
         --//////////////////    DPDT Switch     ///////////////////
         SW                 : in    STD_logic_vector (9 downto 0);  -- Toggle Switch[9:0]
-        
+
         --//////////////////    7-SEG Dispaly   ///////////////////
         HEX0_D             : out   STD_logic_vector (6 downto 0);  -- Seven Segment Digit 0
         HEX0_DP            : out   STD_logic;                      -- Seven Segment Digit DP 0
@@ -38,10 +38,10 @@ entity DE0 is
         DRAM_CS_N           : out   STD_logic;                     -- SDRAM Chip Select
         DRAM_DQ             : inout STD_logic_vector(15 downto 0); -- SDRAM Data bus 16 Bits
         DRAM_UDQM           : out   STD_logic;                     -- SDRAM High-byte Data Mask
-        DRAM_LDQM           : out   STD_logic;                     -- SDRAM Low-byte Data Mask 
+        DRAM_LDQM           : out   STD_logic;                     -- SDRAM Low-byte Data Mask
         DRAM_RAS_N          : out   STD_logic;                     -- SDRAM Row Address Strobe
         DRAM_WE_N           : out   STD_logic;                     -- SDRAM Write Enable
-                
+
         --//////////////////    Flash Interface     ///////////////
         FL_DQ               : inout STD_logic_vector(14 downto 0); -- FLASH Data bus 15 Bits
         FL_DQ15_AM1         : inout STD_logic;                     -- FLASH Data bus Bit 15 or Address A-1
@@ -53,16 +53,16 @@ entity DE0 is
         FL_WP_N             : out   STD_logic;                     -- FLASH Hardware Write Protect
         FL_BYTE_N           : out   STD_logic;                     -- FLASH Selects 8/16-bit mode
         FL_RY               : in    STD_logic;                     -- FLASH Ready/Busy
-        
 
-        
+
+
         --//////////////////    SD_Card Interface   ///////////////
         SD_DAT0             : inout STD_logic;                     -- SD Card Data 0
         SD_DAT3             : inout STD_logic;                     -- SD Card Data 3
         SD_CMD              : inout STD_logic;                     -- SD Card Command Signal
         SD_CLK              : out   STD_logic;                     -- SD Card Clock
         SD_WP_N             : in    STD_logic;                     -- SD Card Write Protect
-        
+
         --//////////////////    GPIO    ///////////////////////////
         GPIO0_CLKIN         : in    STD_logic_vector(1 downto 0);  -- GPIO Connection 0 Clock In Bus
         GPIO0_CLKOUT        : out   STD_logic_vector(1 downto 0);  -- GPIO Connection 0 Clock Out Bus
@@ -70,8 +70,8 @@ entity DE0 is
         GPIO1_CLKIN         : in    STD_logic_vector(1 downto 0);  -- GPIO Connection 1 Clock In Bus
         GPIO1_CLKOUT        : out   STD_logic_vector(1 downto 0);  -- GPIO Connection 1 Clock Out Bus
         GPIO1_D             : inout STD_logic_vector(31 downto 0)  -- GPIO Connection 1 Data Bus
-        
-        
+
+
     --  --//////////////////    LCD Module 16X2     ///////////////
     --  LCD_BLON            : out   STD_logic;                     -- LCD Back Light ON/OFF
     --  LCD_RW              : out   STD_logic;                     -- LCD Read/Write Select, 0 = Write, 1 = Read
@@ -99,7 +99,7 @@ entity DE0 is
 end DE0;
 
 architecture a of DE0 is
-    
+
     component testnios is
         port (
             clk_clk                                   : in    std_logic                     := 'X';             -- clk
@@ -137,7 +137,7 @@ architecture a of DE0 is
             sdcard_external_o_SD_clock                : out   std_logic                                         -- o_SD_clock
         );
     end component testnios;
-    
+
     component LED_ROM_IP IS
         PORT(
             clock             : in std_logic  := '1';
@@ -148,7 +148,7 @@ architecture a of DE0 is
             q                 : out std_logic_vector(15 downto 0)
         );
     end LED_ROM_IP;
-    
+
     component LEDController is
         port(
             clock            : in  std_logic  := '1' ; --50 mhz clock
@@ -171,26 +171,26 @@ architecture a of DE0 is
     signal DRAM_BA      : std_logic_vector (1 downto 0);
     signal BT_rxd       : std_logic;
     signal BT_txd       : std_logic;
-    
+
     signal LEDRom_addr  : std_logic_vector (8 downto 0);
     signal LEDRom_data  : std_logic_vector(11 downto 0);
     signal LEDRom_strobe: std_logic;
-    
+
     signal HEX0         : std_logic_vector(7 downto 0);
     signal HEX1         : std_logic_vector(7 downto 0);
     signal HEX2         : std_logic_vector(7 downto 0);
     signal HEX3         : std_logic_vector(7 downto 0);
-    
+
     signal LEDREAD_addr : std_logic_vector (8 downto 0);
     signal LEDREAD_data : std_logic_vector(15 downto 0);
-    
+
     begin
-    
+
     DRAM_UDQM <= DRAM_DQM(1);
     DRAM_LDQM <= DRAM_DQM(0);
     DRAM_BA_1 <= DRAM_BA(1);
     DRAM_BA_0 <= DRAM_BA(0);
-    
+
     HEX0_DP <= HEX0(7);
     HEX0_D  <= HEX0(6 downto 0);
     HEX1_DP <= HEX1(7);
@@ -199,13 +199,27 @@ architecture a of DE0 is
     HEX2_D  <= HEX2(6 downto 0);
     HEX3_DP <= HEX3(7);
     HEX3_D  <= HEX3(6 downto 0);
-    
+
     FL_WP_N <= '0';
     FL_BYTE_N <= '0'; -- FLASH Selects 8/16-bit mode --we are in 8 bit
-    
-    
+
+
     --component declaration
-    
+    ledcon : LEDController
+        PORT MAP (
+            clock            =>
+            LEDCont_Addr     =>
+            LEDCont_Data     =>
+
+            LEDCont_s_red    =>
+            LEDCont_s_green  =>
+            LEDCont_s_blue   =>
+            LEDCont_s_cath   =>
+            LEDCont_s_clk    =>
+            LEDCont_s_latch  =>
+            LEDCont_s_!OEna  =>
+            LEDCont_s_!Rst   =>
+        );
     u0 : LED_ROM_IP
         PORT MAP (
             clock        => CLOCK_50,         --global clock
@@ -215,7 +229,7 @@ architecture a of DE0 is
             wren         => LEDRom_strobe,    --from NIOSII
             q            => LEDREAD_data
         );
-    
+
     u1 : component testnios
         port map (
             clk_clk                                   => CLOCK_50,          --                                clk.clk
@@ -260,7 +274,7 @@ architecture a of DE0 is
             sdcard_external_o_SD_clock                => SD_CLK             --                                   .o_SD_clock
         );
 
-    
-    
+
+
 
     end a;
