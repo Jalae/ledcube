@@ -12,19 +12,6 @@
    element $${FILENAME}
    {
    }
-   element 7seg
-   {
-      datum _sortIndex
-      {
-         value = "13";
-         type = "int";
-      }
-      datum sopceditor_expanded
-      {
-         value = "0";
-         type = "boolean";
-      }
-   }
    element BlueTooth
    {
       datum _sortIndex
@@ -129,6 +116,14 @@
          type = "boolean";
       }
    }
+   element SevenSeg
+   {
+      datum _sortIndex
+      {
+         value = "13";
+         type = "int";
+      }
+   }
    element altpll_0
    {
       datum _sortIndex
@@ -147,14 +142,6 @@
       datum baseAddress
       {
          value = "20980768";
-         type = "String";
-      }
-   }
-   element 7seg.avalon_parallel_port_slave
-   {
-      datum baseAddress
-      {
-         value = "20980784";
          type = "String";
       }
    }
@@ -179,7 +166,7 @@
          type = "boolean";
       }
    }
-   element BlueTooth.clk
+   element sdram_0.clk
    {
       datum _tags
       {
@@ -187,7 +174,7 @@
          type = "String";
       }
    }
-   element sdram_0.clk
+   element BlueTooth.clk
    {
       datum _tags
       {
@@ -277,48 +264,11 @@
          type = "String";
       }
    }
-   element LEDROM_ena.s1
-   {
-      datum baseAddress
-      {
-         value = "20980816";
-         type = "String";
-      }
-   }
    element Bootloader.s1
    {
       datum baseAddress
       {
          value = "20971520";
-         type = "String";
-      }
-   }
-   element switches.s1
-   {
-      datum baseAddress
-      {
-         value = "20980880";
-         type = "String";
-      }
-   }
-   element LEDROM_address.s1
-   {
-      datum baseAddress
-      {
-         value = "20980864";
-         type = "String";
-      }
-   }
-   element BlueTooth.s1
-   {
-      datum _tags
-      {
-         value = "";
-         type = "String";
-      }
-      datum baseAddress
-      {
-         value = "20980736";
          type = "String";
       }
    }
@@ -335,11 +285,48 @@
          type = "String";
       }
    }
+   element LEDROM_address.s1
+   {
+      datum baseAddress
+      {
+         value = "20980864";
+         type = "String";
+      }
+   }
    element buttons.s1
    {
       datum baseAddress
       {
          value = "20980848";
+         type = "String";
+      }
+   }
+   element switches.s1
+   {
+      datum baseAddress
+      {
+         value = "20980880";
+         type = "String";
+      }
+   }
+   element LEDROM_ena.s1
+   {
+      datum baseAddress
+      {
+         value = "20980816";
+         type = "String";
+      }
+   }
+   element BlueTooth.s1
+   {
+      datum _tags
+      {
+         value = "";
+         type = "String";
+      }
+      datum baseAddress
+      {
+         value = "20980736";
          type = "String";
       }
    }
@@ -389,7 +376,7 @@
  <parameter name="projectName" value="" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1362432618082" />
+ <parameter name="timeStamp" value="1370909279652" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
@@ -431,11 +418,6 @@
    type="conduit"
    dir="end" />
  <interface
-   name="id7seg_external"
-   internal="7seg.external_interface"
-   type="conduit"
-   dir="end" />
- <interface
    name="leds_external"
    internal="LEDs.external_interface"
    type="conduit"
@@ -443,6 +425,11 @@
  <interface
    name="sdcard_external"
    internal="SDCard.conduit_end"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="id7seg_external"
+   internal="SevenSeg.external_interface"
    type="conduit"
    dir="end" />
  <module kind="clock_source" version="12.1" enabled="1" name="clk_0">
@@ -548,7 +535,7 @@
   <parameter name="tightlyCoupledInstructionMaster2AddrWidth" value="1" />
   <parameter name="tightlyCoupledInstructionMaster3AddrWidth" value="1" />
   <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='sdram_0.s1' start='0x800000' end='0x1000000' /><slave name='Bootloader.s1' start='0x1400000' end='0x1401000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x1401800' end='0x1402000' /></address-map>]]></parameter>
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_0.s1' start='0x800000' end='0x1000000' /><slave name='Flash.flash_data' start='0x1000000' end='0x1400000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x1401800' end='0x1402000' /><slave name='SDCard.avalon_sdcard_slave' start='0x1402000' end='0x1402400' /><slave name='BlueTooth.s1' start='0x1402400' end='0x1402420' /><slave name='LEDs.avalon_parallel_port_slave' start='0x1402420' end='0x1402430' /><slave name='7seg.avalon_parallel_port_slave' start='0x1402430' end='0x1402440' /><slave name='altpll_0.pll_slave' start='0x1402440' end='0x1402450' /><slave name='LEDROM_ena.s1' start='0x1402450' end='0x1402460' /><slave name='LEDROM_data.s1' start='0x1402460' end='0x1402470' /><slave name='buttons.s1' start='0x1402470' end='0x1402480' /><slave name='LEDROM_address.s1' start='0x1402480' end='0x1402490' /><slave name='switches.s1' start='0x1402490' end='0x14024A0' /><slave name='Flash.flash_erase_control' start='0x14024A0' end='0x14024A4' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram_0.s1' start='0x800000' end='0x1000000' /><slave name='Flash.flash_data' start='0x1000000' end='0x1400000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x1401800' end='0x1402000' /><slave name='SDCard.avalon_sdcard_slave' start='0x1402000' end='0x1402400' /><slave name='BlueTooth.s1' start='0x1402400' end='0x1402420' /><slave name='LEDs.avalon_parallel_port_slave' start='0x1402420' end='0x1402430' /><slave name='SevenSeg.avalon_parallel_port_slave' start='0x1402430' end='0x1402440' /><slave name='altpll_0.pll_slave' start='0x1402440' end='0x1402450' /><slave name='LEDROM_ena.s1' start='0x1402450' end='0x1402460' /><slave name='LEDROM_data.s1' start='0x1402460' end='0x1402470' /><slave name='buttons.s1' start='0x1402470' end='0x1402480' /><slave name='LEDROM_address.s1' start='0x1402480' end='0x1402490' /><slave name='switches.s1' start='0x1402490' end='0x14024A0' /><slave name='Flash.flash_erase_control' start='0x14024A0' end='0x14024A4' /></address-map>]]></parameter>
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="deviceFamilyName" value="Cyclone III" />
   <parameter name="internalIrqMaskSystemInfo" value="1" />
@@ -890,26 +877,6 @@
    kind="altera_up_avalon_parallel_port"
    version="12.0"
    enabled="1"
-   name="7seg">
-  <parameter name="board" value="DE0" />
-  <parameter name="custom_port" value="false" />
-  <parameter name="preset">Seven Segment Displays</parameter>
-  <parameter name="leds" value="Green" />
-  <parameter name="sevensegs" value="3 to 0" />
-  <parameter name="gpio" value="GPIO 0 (JP1)" />
-  <parameter name="custom_DW" value="32" />
-  <parameter name="custom_direction" value="Input only" />
-  <parameter name="capture" value="false" />
-  <parameter name="edge" value="Rising" />
-  <parameter name="irq" value="false" />
-  <parameter name="irq_type" value="Edge" />
-  <parameter name="AUTO_CLOCK_RESET_CLOCK_RATE" value="50000000" />
-  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone III" />
- </module>
- <module
-   kind="altera_up_avalon_parallel_port"
-   version="12.0"
-   enabled="1"
    name="LEDs">
   <parameter name="board" value="DE0" />
   <parameter name="custom_port" value="false" />
@@ -932,6 +899,26 @@
    enabled="1"
    name="SDCard">
   <parameter name="AUTO_CLOCK_SINK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone III" />
+ </module>
+ <module
+   kind="altera_up_avalon_parallel_port"
+   version="12.0"
+   enabled="1"
+   name="SevenSeg">
+  <parameter name="board" value="DE0" />
+  <parameter name="custom_port" value="false" />
+  <parameter name="preset">Seven Segment Displays</parameter>
+  <parameter name="leds" value="Green" />
+  <parameter name="sevensegs" value="3 to 0" />
+  <parameter name="gpio" value="GPIO 0 (JP1)" />
+  <parameter name="custom_DW" value="32" />
+  <parameter name="custom_direction" value="Input only" />
+  <parameter name="capture" value="false" />
+  <parameter name="edge" value="Rising" />
+  <parameter name="irq" value="false" />
+  <parameter name="irq_type" value="Edge" />
+  <parameter name="AUTO_CLOCK_RESET_CLOCK_RATE" value="50000000" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone III" />
  </module>
  <connection
@@ -1132,20 +1119,6 @@
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x01000000" />
  </connection>
- <connection
-   kind="reset"
-   version="12.1"
-   start="nios2_qsys_0.jtag_debug_module_reset"
-   end="7seg.clock_reset_reset" />
- <connection kind="clock" version="12.1" start="clk_0.clk" end="7seg.clock_reset" />
- <connection
-   kind="avalon"
-   version="12.1"
-   start="nios2_qsys_0.data_master"
-   end="7seg.avalon_parallel_port_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x01402430" />
- </connection>
  <connection kind="clock" version="12.1" start="clk_0.clk" end="LEDs.clock_reset" />
  <connection
    kind="avalon"
@@ -1173,5 +1146,23 @@
    end="SDCard.avalon_sdcard_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x01402000" />
+ </connection>
+ <connection
+   kind="reset"
+   version="12.1"
+   start="nios2_qsys_0.jtag_debug_module_reset"
+   end="SevenSeg.clock_reset_reset" />
+ <connection
+   kind="clock"
+   version="12.1"
+   start="clk_0.clk"
+   end="SevenSeg.clock_reset" />
+ <connection
+   kind="avalon"
+   version="12.1"
+   start="nios2_qsys_0.data_master"
+   end="SevenSeg.avalon_parallel_port_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x01402430" />
  </connection>
 </system>

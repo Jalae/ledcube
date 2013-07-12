@@ -100,7 +100,7 @@ end DE0;
 
 architecture a of DE0 is
     
-    component testnios is
+component ledcubecore is
         port (
             clk_clk                                   : in    std_logic                     := 'X';             -- clk
             sdram_0_wire_addr                         : out   std_logic_vector(11 downto 0);                    -- addr
@@ -126,17 +126,17 @@ architecture a of DE0 is
             flash_conduit_end_WE_N                    : out   std_logic;                                        -- WE_N
             flash_conduit_end_RST_N                   : out   std_logic;                                        -- RST_N
             flash_conduit_end_DQ                      : inout std_logic_vector(7 downto 0)  := (others => 'X'); -- DQ
-            id7seg_external_HEX0                      : out   std_logic_vector(7 downto 0);                     -- HEX0
-            id7seg_external_HEX1                      : out   std_logic_vector(7 downto 0);                     -- HEX1
-            id7seg_external_HEX2                      : out   std_logic_vector(7 downto 0);                     -- HEX2
-            id7seg_external_HEX3                      : out   std_logic_vector(7 downto 0);                     -- HEX3
             leds_external_export                      : out   std_logic_vector(9 downto 0);                     -- export
             sdcard_external_b_SD_cmd                  : inout std_logic                     := 'X';             -- b_SD_cmd
             sdcard_external_b_SD_dat                  : inout std_logic                     := 'X';             -- b_SD_dat
             sdcard_external_b_SD_dat3                 : inout std_logic                     := 'X';             -- b_SD_dat3
-            sdcard_external_o_SD_clock                : out   std_logic                                         -- o_SD_clock
+            sdcard_external_o_SD_clock                : out   std_logic;                                        -- o_SD_clock
+            sevenseg_external_HEX0                    : out   std_logic_vector(7 downto 0);                     -- HEX0
+            sevenseg_external_HEX1                    : out   std_logic_vector(7 downto 0);                     -- HEX1
+            sevenseg_external_HEX2                    : out   std_logic_vector(7 downto 0);                     -- HEX2
+            sevenseg_external_HEX3                    : out   std_logic_vector(7 downto 0)                      -- HEX3
         );
-    end component testnios;
+    end component ledcubecore;
     
     component LED_ROM_IP IS
         PORT(
@@ -246,7 +246,7 @@ architecture a of DE0 is
             q            => LEDREAD_data
         );
  --   
- --   u1 : component testnios
+ --   u1 : component ledcubecore
  --       port map (
  --           clk_clk                                   => CLOCK_50,          --                                clk.clk
  --

@@ -233,8 +233,8 @@ begin
                                 else
                                     b_d       := '0';
                                 end if;
-                                if(address(6 downto 3) = "1111") then
-                                    if (address(9 downto 7) = address(2 downto 0)) then
+                                if(address(5 downto 3) = "111") then
+                                    if (address(8 downto 6) = address(2 downto 0)) then
                                         c_d := '1';
                                     else
                                         c_d := '0';

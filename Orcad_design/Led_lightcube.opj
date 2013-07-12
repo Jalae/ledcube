@@ -49,7 +49,8 @@
     (FileView
       (Path "Design Resources")
       (Path "Design Resources" ".\led_lightcube.dsn")
-      (Path "Design Resources" ".\led_lightcube.dsn" "SCHEMATIC1"))
+      (Path "Design Resources" ".\led_lightcube.dsn" "SCHEMATIC1")
+      (Select "Design Resources"))
     (HierarchyView)
     (Doc
       (Type "COrCapturePMDoc")
@@ -57,21 +58,10 @@
         (Placement "44 0 1 -1 -1 -8 -30 0 200 0 370"))
       (Tab 0))
     (Doc
-      (Type "COrPartDoc")
-      (Frame
-        (Placement "44 0 1 -1 -1 -8 -30 175 1492 175 689")
-        (PackageScroll "0 0")
-        (PackageZoom "1")
-        (PartPackage "Part")
-        (Scroll "2876 853")
-        (Zoom "553"))
-      (Path "Z:\SENIORPROJECT\ORCAD_DESIGN\LIBRARY1.OLB")
-      (Package "AnodeDriver"))
-    (Doc
       (Type "COrSchematicDoc")
       (Frame
-        (Placement "44 2 3 -1 -1 -8 -30 50 1130 50 458")
-        (Scroll "-47 0")
+        (Placement "44 0 1 -1 -1 -8 -30 50 1130 50 458")
+        (Scroll "-24 0")
         (Zoom "84")
         (Occurrence "/"))
       (Path "Z:\SENIORPROJECT\ORCAD_DESIGN\LED_LIGHTCUBE.DSN")
@@ -80,9 +70,9 @@
     (Doc
       (Type "COrSchematicDoc")
       (Frame
-        (Placement "44 0 1 -1 -1 -8 -30 100 1711 100 614")
-        (Scroll "-296 0")
-        (Zoom "100")
+        (Placement "44 2 3 -1 -1 -8 -30 100 1711 100 614")
+        (Scroll "0 540")
+        (Zoom "200")
         (Occurrence "/"))
       (Path "Z:\SENIORPROJECT\ORCAD_DESIGN\LED_LIGHTCUBE.DSN")
       (Schematic "SCHEMATIC1")
@@ -96,5 +86,16 @@
         (Occurrence "/"))
       (Path "Z:\SENIORPROJECT\ORCAD_DESIGN\LED_LIGHTCUBE.DSN")
       (Schematic "SCHEMATIC1")
-      (Page "LEDs")))
+      (Page "LEDs"))
+    (Doc
+      (Type "COrPartDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 175 1492 175 689")
+        (PackageScroll "0 0")
+        (PackageZoom "1")
+        (PartPackage "Part")
+        (Scroll "2876 853")
+        (Zoom "553"))
+      (Path "Z:\SENIORPROJECT\ORCAD_DESIGN\LIBRARY1.OLB")
+      (Package "AnodeDriver")))
   (MPSSessionName "kehnin.dyer"))
