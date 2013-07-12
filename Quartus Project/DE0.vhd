@@ -184,6 +184,16 @@ architecture a of DE0 is
     signal LEDREAD_addr : std_logic_vector (8 downto 0);
     signal LEDREAD_data : std_logic_vector(15 downto 0);
 
+    signal s_red_o   : std_logic;
+    signal s_green_o : std_logic;
+    signal s_blue_o  : std_logic;
+    signal s_cath_o  : std_logic;
+    signal s_clk_o   : std_logic;
+    signal s_latch_o : std_logic;
+    signal s_!OEna_o : std_logic;
+    signal s_!Rst_o  : std_logic;
+    
+
     begin
 
     DRAM_UDQM <= DRAM_DQM(1);
@@ -202,23 +212,24 @@ architecture a of DE0 is
 
     FL_WP_N <= '0';
     FL_BYTE_N <= '0'; -- FLASH Selects 8/16-bit mode --we are in 8 bit
+    
 
 
     --component declaration
     ledcon : LEDController
         PORT MAP (
-            clock            =>
-            LEDCont_Addr     =>
-            LEDCont_Data     =>
+            clock            => CLOCK_50,
+            LEDCont_Addr     => LEDREAD_addr,
+            LEDCont_Data     => LEDRom_data,
 
-            LEDCont_s_red    =>
-            LEDCont_s_green  =>
-            LEDCont_s_blue   =>
-            LEDCont_s_cath   =>
-            LEDCont_s_clk    =>
-            LEDCont_s_latch  =>
-            LEDCont_s_!OEna  =>
-            LEDCont_s_!Rst   =>
+            LEDCont_s_red    => s_red_o;
+            LEDCont_s_green  => s_green_o;
+            LEDCont_s_blue   => s_blue_o;
+            LEDCont_s_cath   => s_cath_o;
+            LEDCont_s_clk    => s_clk_o;
+            LEDCont_s_latch  => s_latch_o;
+            LEDCont_s_!OEna  => s_!OEna_o;
+            LEDCont_s_!Rst   => s_!Rst_o;
         );
     u0 : LED_ROM_IP
         PORT MAP (
