@@ -12,115 +12,43 @@ struct coord
     size_t in;
 };
 //helper functions
-bool operator==(coord lhs, coord rhs)
-{
-    bool u, r, i;
-    u = r = i = false;
-    u = lhs.up    == rhs.up;
-    r = lhs.right == rhs.right;
-    i = lhs.in    == rhs.in;
-    return u && r && i;
-}
-void operator+(coord & lhs, direction rhs)
-{
-    switch(rhs)
-    {
-        case up:    lhs.up + 1;
-            break;
-        case down:  lhs.up - 1;
-            break;
-        case left:  lhs.right - 1;
-            break;
-        case right: lhs.right + 1;
-            break;
-        case in:    lhs.in + 1;
-            break;
-        case out:   lhs.in - 1;
-            break;
-        case none:
-        default:    lhs;
-    }
-}
+bool operator==(coord lhs, coord rhs);
+void operator+(coord & lhs, direction rhs);
+
 // this class will handle holding and managing colors.
 // colors are 5 bits.
 // no special handling is needed for the client.
 // any bits given more than 5 are ignored.
-
 class color
 {
     uint16_t packedcolor;
 public:
-    size_t red()
-    {
-        return packedcolor && (0x001F << 0);
-    }
-    void red(size_t r)
-    {
-        packedcolor = (r << 0) && (0x001F << 0);
-    }
-    size_t green()
-    {
-        return packedcolor && (0x001F << 5);
-    }
+    size_t red();
+    void red(size_t r);
+    size_t green();
     void green(size_t g);
-    {
-        packedcolor = (g << 5) && (0x001F << 5);
-    }
-    size_t blue()
-    {
-        return packedcolor && (0x001F << 10);
-    }
+    size_t blue();
     void blue(size_t b);
-    {
-        packedcolor = (b << 10) && (0x001F << 10);
-    }
-    uint16_t dump()
-    {
-        return packedcolor;
-    }
+    uint16_t dump();
 };
-//retarded cyclical dependancy
-class snakeNode;
 
+class snakeNode;
+//^retarded cyclical dependancy
 class snake
 {
     snakeNode* head;
     direction  dir;
 public:
-    snake(coord c):dir(left)
-    {
-        head = new snakeNode(c);
-    }
-    ~snake()
-    {
-        snakeNode* t(head), t2(head);
-        while(t)
-        {
-            t2 = t;
-            t = t->m_next;
-            delete t2;
-        }
-    }
-    void addNode( snakeNode* t)
-    {
-        head->findtail()->m_next = t;
-    }
+    snake(coord c):dir(left);
+    ~snake();
+    void addNode( snakeNode* t);
+    //i don't plan on ever removing a node.
 
-//i don't plan on ever removing a node.
-
-    void updatePos()
-    {
-        coord t = head->m_pos;
-        t+dir;
-        fixcoord(t, dir);
-        head->updatePod(t);
-    }
-    bool p_dead()
-    {
-        if(head->m_next)
-            return head->m_next->check(head);
-        return false;
-    }
+    //will return a snakenode list that is the same as head, except it has the tail still
+    //this will be used.
+    coord updatePos(direction d);
+    bool dead();
+    bool contains(coord const & c);
 };
 
 class snakeNode
@@ -130,32 +58,13 @@ class snakeNode
     snakeNode * m_next;
 public:
 friend snake;
-    snakeNode()
-    {
-        m_next = NULL;
-    }
-    updatePos(coord n)
-    {
-        if(m_next)
-            m_next->updatePos(m_pos);
-        m_next = n;
-        return;
-    }
-    snakeNode * findTail()
-    {
-        if(!m_next)
-            return this;
-        return m_next->findTail();
-    }
+    snakeNode();
+    snakeNode(snakeNode const & cpy);
+    snakeNode & operator=(snakeNode const & cpy);
+    updatePos(coord n);
+    snakeNode * findTail();
 
-    bool check( snakeNode * lhs )
-    {
-        if(lhd->m_pos == m_pos)
-            return true;
-        if(m_next)
-            return m_next->check(lhs);
-        return false;
-    }
+    bool check( coord const & lhs );
 };
 
 class snakeGame
@@ -164,12 +73,15 @@ class snakeGame
     //bottom left is considered 0,0,0
     coord Maxes;
     snake* theSnake;
+    snakeNode * fruit;
 
     //internal methods
     //draws the whole array
     void Draw();
 public:
     //expects that we just moved out of the play area this move
+    //as in we didn't go out 3 moves ago.
+    //it is fine if we didn't go out.
     void fixcoord(coord & c, dir d)
     {
         switch(dir)
