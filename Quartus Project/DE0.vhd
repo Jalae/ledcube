@@ -64,11 +64,11 @@ entity DE0 is
         SD_WP_N             : in    STD_logic;                     -- SD Card Write Protect
 
         --//////////////////    GPIO    ///////////////////////////
-        GPIO0_CLKIN         : in    STD_logic_vector(1 downto 0);  -- GPIO Connection 0 Clock In Bus
-        GPIO0_CLKOUT        : out   STD_logic_vector(1 downto 0);  -- GPIO Connection 0 Clock Out Bus
+        GPIO0_CLKIN         : in    STD_logic_vector(1  downto 0);  -- GPIO Connection 0 Clock In Bus
+        GPIO0_CLKOUT        : out   STD_logic_vector(1  downto 0);  -- GPIO Connection 0 Clock Out Bus
         GPIO0_D             : inout STD_logic_vector(31 downto 0); -- GPIO Connection 0 Data Bus
-        GPIO1_CLKIN         : in    STD_logic_vector(1 downto 0);  -- GPIO Connection 1 Clock In Bus
-        GPIO1_CLKOUT        : out   STD_logic_vector(1 downto 0);  -- GPIO Connection 1 Clock Out Bus
+        GPIO1_CLKIN         : in    STD_logic_vector(1  downto 0);  -- GPIO Connection 1 Clock In Bus
+        GPIO1_CLKOUT        : out   STD_logic_vector(1  downto 0);  -- GPIO Connection 1 Clock Out Bus
         GPIO1_D             : inout STD_logic_vector(31 downto 0)  -- GPIO Connection 1 Data Bus
 
 
@@ -126,15 +126,15 @@ architecture a of DE0 is
             flash_conduit_end_WE_N                    : out   std_logic;                                        -- WE_N
             flash_conduit_end_RST_N                   : out   std_logic;                                        -- RST_N
             flash_conduit_end_DQ                      : inout std_logic_vector(7 downto 0)  := (others => 'X'); -- DQ
-            id7seg_external_HEX0                      : out   std_logic_vector(7 downto 0);                     -- HEX0
-            id7seg_external_HEX1                      : out   std_logic_vector(7 downto 0);                     -- HEX1
-            id7seg_external_HEX2                      : out   std_logic_vector(7 downto 0);                     -- HEX2
-            id7seg_external_HEX3                      : out   std_logic_vector(7 downto 0);                     -- HEX3
+            sevenseg_external_HEX0                    : out   std_logic_vector(7 downto 0);                     -- HEX0
+            sevenseg_external_HEX1                    : out   std_logic_vector(7 downto 0);                     -- HEX1
+            sevenseg_external_HEX2                    : out   std_logic_vector(7 downto 0);                     -- HEX2
+            sevenseg_external_HEX3                    : out   std_logic_vector(7 downto 0);                     -- HEX3
             leds_external_export                      : out   std_logic_vector(9 downto 0);                     -- export
             sdcard_external_b_SD_cmd                  : inout std_logic                     := 'X';             -- b_SD_cmd
             sdcard_external_b_SD_dat                  : inout std_logic                     := 'X';             -- b_SD_dat
             sdcard_external_b_SD_dat3                 : inout std_logic                     := 'X';             -- b_SD_dat3
-            sdcard_external_o_SD_clock                : out   std_logic                                         -- o_SD_clock
+            sdcard_external_o_SD_clock                : out   std_logic                                        -- o_SD_clock
         );
     end component testnios;
 
@@ -147,7 +147,7 @@ architecture a of DE0 is
             wren              : in std_logic  := '0';
             q                 : out std_logic_vector(15 downto 0)
         );
-    end LED_ROM_IP;
+    end component LED_ROM_IP;
 
     component LEDController is
         port(
@@ -161,41 +161,46 @@ architecture a of DE0 is
             LEDCont_s_cath   : out std_logic  := '0' ; --last 8 matter -- 1 activates (pulls down) a layer
             LEDCont_s_clk    : out std_logic  := '1' ; --on pos edge load new serial vals
             LEDCont_s_latch  : out std_logic  := '1' ; --on pos edge load new parralel vals
-            LEDCont_s_!OEna  : out std_logic  := '1' ; --0 turns on the leds, 1 zzzz them
-            LEDCont_s_!Rst   : out std_logic  := '0' ; --1 turns on the chip, 0 resets it
+            LEDCont_s_OEna  : out std_logic  := '1' ; --0 turns on the leds, 1 zzzz them
+            LEDCont_s_Rst   : out std_logic  := '0'  --1 turns on the chip, 0 resets it
         );
+    end component LEDController;
 
-    end LEDController;
+    signal DRAM_DQM       : std_logic_vector (1 downto 0);
+    signal DRAM_BA        : std_logic_vector (1 downto 0);
+    signal BT_rxd         : std_logic;
+    signal BT_txd         : std_logic;
 
-    signal DRAM_DQM     : std_logic_vector (1 downto 0);
-    signal DRAM_BA      : std_logic_vector (1 downto 0);
-    signal BT_rxd       : std_logic;
-    signal BT_txd       : std_logic;
+    signal LEDRom_addr    : std_logic_vector (8 downto 0);
+    signal LEDRom_data    : std_logic_vector(15 downto 0);
+    signal LEDRom_strobe  : std_logic;
 
-    signal LEDRom_addr  : std_logic_vector (8 downto 0);
-    signal LEDRom_data  : std_logic_vector(11 downto 0);
-    signal LEDRom_strobe: std_logic;
+    signal HEX0           : std_logic_vector(7 downto 0);
+    signal HEX1           : std_logic_vector(7 downto 0);
+    signal HEX2           : std_logic_vector(7 downto 0);
+    signal HEX3           : std_logic_vector(7 downto 0);
 
-    signal HEX0         : std_logic_vector(7 downto 0);
-    signal HEX1         : std_logic_vector(7 downto 0);
-    signal HEX2         : std_logic_vector(7 downto 0);
-    signal HEX3         : std_logic_vector(7 downto 0);
+    signal LEDREAD_addr   : std_logic_vector (8 downto 0);
+    signal LEDREAD_data   : std_logic_vector(15 downto 0);
 
-    signal LEDREAD_addr : std_logic_vector (8 downto 0);
-    signal LEDREAD_data : std_logic_vector(15 downto 0);
-
-    signal s_red_o   : std_logic;
-    signal s_green_o : std_logic;
-    signal s_blue_o  : std_logic;
-    signal s_cath_o  : std_logic;
-    signal s_clk_o   : std_logic;
-    signal s_latch_o : std_logic;
-    signal s_!OEna_o : std_logic;
-    signal s_!Rst_o  : std_logic;
-    
+    signal LED_RED_OUT    : std_logic;
+    signal LED_GREEN_OUT  : std_logic;
+    signal LED_BLUE_OUT   : std_logic;
+    signal LED_CATH_OUT   : std_logic;
+    signal LED_CLK_OUT    : std_logic;
+    signal LED_LATCH_OUT  : std_logic;
+    signal LED_OENA_OUT   : std_logic;
+    signal LED_RST_OUT    : std_logic;
 
     begin
-
+    GPIO0_D(0) <= LED_RED_OUT;
+    GPIO0_D(1) <= LED_GREEN_OUT;
+    GPIO0_D(2) <= LED_BLUE_OUT;
+    GPIO0_D(3) <= LED_CATH_OUT;
+    GPIO0_D(4) <= LED_CLK_OUT;
+    GPIO0_D(5) <= LED_LATCH_OUT;
+    GPIO0_D(6) <= LED_OENA_OUT;
+    GPIO0_D(7) <= LED_RST_OUT;
     DRAM_UDQM <= DRAM_DQM(1);
     DRAM_LDQM <= DRAM_DQM(0);
     DRAM_BA_1 <= DRAM_BA(1);
@@ -212,24 +217,23 @@ architecture a of DE0 is
 
     FL_WP_N <= '0';
     FL_BYTE_N <= '0'; -- FLASH Selects 8/16-bit mode --we are in 8 bit
-    
 
 
     --component declaration
     ledcon : LEDController
         PORT MAP (
-            clock            => CLOCK_50,
-            LEDCont_Addr     => LEDREAD_addr,
-            LEDCont_Data     => LEDRom_data,
+            clock           => CLOCK_50,
+            LEDCont_Addr    => LEDREAD_addr,
+            LEDCont_Data    => LEDREAD_data,
 
-            LEDCont_s_red    => s_red_o;
-            LEDCont_s_green  => s_green_o;
-            LEDCont_s_blue   => s_blue_o;
-            LEDCont_s_cath   => s_cath_o;
-            LEDCont_s_clk    => s_clk_o;
-            LEDCont_s_latch  => s_latch_o;
-            LEDCont_s_!OEna  => s_!OEna_o;
-            LEDCont_s_!Rst   => s_!Rst_o;
+            LEDCont_s_red   => LED_RED_OUT,
+            LEDCont_s_green => LED_GREEN_OUT,
+            LEDCont_s_blue  => LED_BLUE_OUT,
+            LEDCont_s_cath  => LED_CATH_OUT,
+            LEDCont_s_clk   => LED_CLK_OUT,
+            LEDCont_s_latch => LED_LATCH_OUT,
+            LEDCont_s_OEna  => LED_OENA_OUT,
+            LEDCont_s_Rst   => LED_RST_OUT
         );
     u0 : LED_ROM_IP
         PORT MAP (
@@ -284,8 +288,5 @@ architecture a of DE0 is
             sdcard_external_b_SD_dat3                 => SD_DAT3,           --                                   .b_SD_dat3
             sdcard_external_o_SD_clock                => SD_CLK             --                                   .o_SD_clock
         );
-
-
-
 
     end a;
