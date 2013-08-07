@@ -1,45 +1,22 @@
 
 #include "writeLib.h"
+#include "stdlib.h"
+#include "time.h"
 
-enum direction
-{
-    up, down, left, right, in, out, none
-};
-struct coord
-{
-    size_t up;
-    size_t right;
-    size_t in;
-};
-//helper functions
-bool operator==(coord lhs, coord rhs);
-void operator+(coord & lhs, direction rhs);
 
-// this class will handle holding and managing colors.
-// colors are 5 bits.
-// no special handling is needed for the client.
-// any bits given more than 5 are ignored.
-class color
-{
-    uint16_t packedcolor;
-public:
-    size_t red();
-    void red(size_t r);
-    size_t green();
-    void green(size_t g);
-    size_t blue();
-    void blue(size_t b);
-    uint16_t dump();
-};
+#ifndef snakelib
+#define snakelib
 
 class snakeNode;
+class snakeGame;
 //^retarded cyclical dependancy
 class snake
 {
-    snakeNode* head;
+    snakeGame * momma;
     direction  dir;
 public:
-    snake(coord c):dir(left);
+    snakeNode* head;
+    snake(coord c, snakeGame * m);
     ~snake();
     void addNode( snakeNode* t);
     //i don't plan on ever removing a node.
@@ -48,22 +25,30 @@ public:
     //this will be used.
     coord updatePos(direction d);
     bool dead();
-    bool contains(coord const & c);
+    bool contains(snakeNode const & c);
 };
 
 class snakeNode
 {
+public:
+    snakeNode * m_next;
     coord m_pos;
     color m_color;
-    snakeNode * m_next;
-public:
 friend snake;
-    snakeNode();
+    snakeNode(coord);
     snakeNode(snakeNode const & cpy);
     snakeNode & operator=(snakeNode const & cpy);
-    updatePos(coord n);
+    void updatePos(coord n);
     snakeNode * findTail();
 
+    void setColor(color c)
+    {
+        m_color = c;
+    }
+    color getColor()
+    {
+        return m_color;
+    }
     bool check( coord const & lhs );
 };
 
@@ -79,35 +64,65 @@ class snakeGame
     //draws the whole array
     void Draw();
 public:
+
+    coord randomcoord()
+    {
+        coord c;
+        srand(time(NULL));
+        c.up = rand() % Maxes.up;
+        c.right = rand() % Maxes.right;
+        c.in = rand() % Maxes.in;
+    }
+    //this function assumes the previous fruit is no longer the games
+    //but rather the snakes
+    void makeFruit()
+    {
+        coord c;
+        do
+        {
+            c = randomcoord();
+        } while(!theSnake->contains(c));
+        snakeNode * temp = new snakeNode(c);
+        fruit = temp;
+    }
+
     //expects that we just moved out of the play area this move
     //as in we didn't go out 3 moves ago.
     //it is fine if we didn't go out.
-    void fixcoord(coord & c, dir d)
+    void fixcoord(coord & c, direction d)
     {
-        switch(dir)
+        switch(d)
         {
             case up: if (c.up >= Maxes.up) c.up=0;
             break;
-            case down: if (c.down <= 0) c.down=Maxes.down;
+            case down: if (c.up <= 0) c.up=0;
             break;
             case right: if (c.right >= Maxes.right) c.right=0;
             break;
-            case left: if (c.left <= 0) c.left=Maxes.left;
+            case left: if (c.right <= 0) c.right=0;
             break;
             case in: if (c.in >= Maxes.in) c.in=0;
             break;
-            case out: if (c.out <= 0) c.out=Maxes.out;
-            break;
+            case out: if (c.in <= 0) c.in=0;
             default:
+            break;
         }
     }
-    snakeGame(size_t u, r, i, len = 3):maxUp(u), maxRight(r), maxIn(i)
+
+    snakeGame(size_t u, size_t r, size_t i, size_t len = 3)
     {
-        theSnake = new snake(len);
+        Maxes.up=u; Maxes.right=r; Maxes.in=i;
+        coord temp = {u/2,r/2,i/2};
+        theSnake = new snake(temp, this);
+        makeFruit();
     }
+
     ~snakeGame()
     {
         delete(theSnake);
     }
+
     int play(direction d = none);
 };
+
+#endif

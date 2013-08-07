@@ -100,7 +100,7 @@ end DE0;
 
 architecture a of DE0 is
 
-    component testnios is
+    component lednios is
         port (
             clk_clk                                   : in    std_logic                     := 'X';             -- clk
             sdram_0_wire_addr                         : out   std_logic_vector(11 downto 0);                    -- addr
@@ -116,7 +116,7 @@ architecture a of DE0 is
             ledrom_address_external_connection_export : out   std_logic_vector(8 downto 0);                     -- export
             bluetooth_external_connection_rxd         : in    std_logic                     := 'X';             -- rxd
             bluetooth_external_connection_txd         : out   std_logic;                                        -- txd
-            ledrom_data_external_connection_export    : out   std_logic_vector(11 downto 0);                    -- export
+            ledrom_data_external_connection_export    : out   std_logic_vector(15 downto 0);                    -- export
             buttons_external_connection_export        : in    std_logic_vector(2 downto 0)  := (others => 'X'); -- export
             ledrom_ena_external_connection_export     : out   std_logic;                                        -- export
             sdram_clk_clk                             : out   std_logic;                                        -- clk
@@ -136,7 +136,7 @@ architecture a of DE0 is
             sdcard_external_b_SD_dat3                 : inout std_logic                     := 'X';             -- b_SD_dat3
             sdcard_external_o_SD_clock                : out   std_logic                                        -- o_SD_clock
         );
-    end component testnios;
+    end component lednios;
 
     component LED_ROM_IP IS
         PORT(
@@ -172,7 +172,7 @@ architecture a of DE0 is
     signal BT_txd         : std_logic;
 
     signal LEDRom_addr    : std_logic_vector (8 downto 0);
-    signal LEDRom_data    : std_logic_vector(15 downto 0);
+    signal LEDRom_data    : std_logic_vector(15 downto 0); -- change to 15 in ip
     signal LEDRom_strobe  : std_logic;
 
     signal HEX0           : std_logic_vector(7 downto 0);
@@ -245,7 +245,7 @@ architecture a of DE0 is
             q            => LEDREAD_data
         );
 
-    u1 : component testnios
+    u1 : lednios
         port map (
             clk_clk                                   => CLOCK_50,          --                                clk.clk
 
@@ -260,10 +260,10 @@ architecture a of DE0 is
             buttons_external_connection_export        => BUTTON,            --        buttons_external_connection.export
             leds_external_export                      => LEDG,              --                      leds_external.export
 
-            id7seg_external_HEX0                      => HEX0,              --                    id7seg_external.HEX0
-            id7seg_external_HEX1                      => HEX1,              --                                   .HEX1
-            id7seg_external_HEX2                      => HEX2,              --                                   .HEX2
-            id7seg_external_HEX3                      => HEX3,              --                                   .HEX3
+            sevenseg_external_HEX0                    => HEX0,              --                    id7seg_external.HEX0
+            sevenseg_external_HEX1                    => HEX1,              --                                   .HEX1
+            sevenseg_external_HEX2                    => HEX2,              --                                   .HEX2
+            sevenseg_external_HEX3                    => HEX3,              --                                   .HEX3
 
             sdram_0_wire_addr                         => DRAM_ADDR,         --                       sdram_0_wire.addr
             sdram_0_wire_ba                           => DRAM_BA,           --                                   .ba

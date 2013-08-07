@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "snake.h"
 
 bool operator==(coord lhs, coord rhs)
@@ -61,13 +62,13 @@ uint16_t color::dump()
 }
 
 ////////////////////////////////////SNAKE//////////////////////////////////////
-snake::snake(coord c):dir(left)
+snake::snake(coord c, snakeGame * m):dir(left), momma(m)
 {
     head = new snakeNode(c);
 }
 snake::~snake()
 {
-    snakeNode* t(head), t2(head);
+    snakeNode * t(head), * t2(head);
     while(t)
     {
         t2 = t;
@@ -77,7 +78,7 @@ snake::~snake()
 }
 void snake::addNode( snakeNode* t)
 {
-    head->findtail()->m_next = t;
+    head->findTail()->m_next = t;
 }
 
 //i don't plan on ever removing a node.
@@ -90,9 +91,9 @@ coord snake::updatePos(direction d)
         dir = d;
     coord t = head->m_pos;
     t+dir;
-    fixcoord(t, dir); //idk how to get this to snakegame
+    momma->fixcoord(t, dir); //idk how to get this to snakegame
     coord old = head->findTail()->m_pos;
-    head->updatePod(t);
+    head->updatePos(t);
     return old;
 }
 bool snake::dead()
@@ -101,36 +102,40 @@ bool snake::dead()
         return head->m_next->check(head->m_pos);
     return false;
 }
-bool snake::contains(coord const & c)
+bool snake::contains(snakeNode const & c)
 {
-    return head->check(c);
+    return head->check(c.m_pos);
 }
 
 
 //////////////////////////////////SNAKENODE////////////////////////////////////
-snakeNode::snakeNode()
+snakeNode::snakeNode(coord c):m_pos(c)
 {
+    m_color.red(0);
+    m_color.green(0);
+    m_color.blue(0);
     m_next = NULL;
 }
 snakeNode::snakeNode(snakeNode const & cpy)
 {
     *this = cpy;
 }
-snakeNode::snakeNode & operator=(snakeNode const & cpy)
+snakeNode & snakeNode::operator=(snakeNode const & cpy)
 {
     this->m_pos = cpy.m_pos;
     this->m_color = cpy.m_color;
     this->m_next = NULL;
     //i really don't want to copy the structure, just the data.
+    return *this;
 }
-snakeNode::updatePos(coord n)
+void snakeNode::updatePos(coord n)
 {
     if(m_next)
         m_next->updatePos(m_pos);
-    m_next = n;
+    m_pos = n;
     return;
 }
-snakeNode::snakeNode * findTail()
+snakeNode * snakeNode::findTail()
 {
     if(!m_next)
         return this;
@@ -145,25 +150,27 @@ bool snakeNode::check( coord const & lhs )
     return false;
 }
 
-
-
-
-
-
-int play(direction d)
+int snakeGame::play(direction d)
 {
-    coord old = theSnake->upDatePos(d);
+    coord old = theSnake->updatePos(d);
     if(theSnake->dead())
         return 0;
-    if( theSnake->contains(fruit->m_pos) )
+    if( theSnake->contains(*fruit) )
     {
-        addNode(fruit);
+        theSnake->addNode(fruit);
         makeFruit();
-        WRITE(theSnake);
+        write(theSnake->head);
     }
     else
     {
-        WRITE(theSnake);
-        WRITE(old, 0);
+        write(theSnake->head);
+        write(old, 0);
     }
+
 }
+
+
+
+
+
+
