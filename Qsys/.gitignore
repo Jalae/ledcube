@@ -1,0 +1,4 @@
+*.rpt
+.qsys_edit
+software/*_bsp
+testnios

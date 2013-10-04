@@ -100,7 +100,7 @@ end DE0;
 
 architecture a of DE0 is
 
-    component lednios is
+    component testnios is
         port (
             clk_clk                                   : in    std_logic                     := 'X';             -- clk
             sdram_0_wire_addr                         : out   std_logic_vector(11 downto 0);                    -- addr
@@ -136,7 +136,7 @@ architecture a of DE0 is
             sdcard_external_b_SD_dat3                 : inout std_logic                     := 'X';             -- b_SD_dat3
             sdcard_external_o_SD_clock                : out   std_logic                                        -- o_SD_clock
         );
-    end component lednios;
+    end component testnios;
 
     component LED_ROM_IP IS
         PORT(
@@ -245,7 +245,7 @@ architecture a of DE0 is
             q            => LEDREAD_data
         );
 
-    u1 : lednios
+    u1 : testnios
         port map (
             clk_clk                                   => CLOCK_50,          --                                clk.clk
 

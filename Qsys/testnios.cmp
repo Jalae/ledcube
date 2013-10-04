@@ -1,0 +1,38 @@
+	component testnios is
+		port (
+			clk_clk                                   : in    std_logic                     := 'X';             -- clk
+			sdram_0_wire_addr                         : out   std_logic_vector(11 downto 0);                    -- addr
+			sdram_0_wire_ba                           : out   std_logic_vector(1 downto 0);                     -- ba
+			sdram_0_wire_cas_n                        : out   std_logic;                                        -- cas_n
+			sdram_0_wire_cke                          : out   std_logic;                                        -- cke
+			sdram_0_wire_cs_n                         : out   std_logic;                                        -- cs_n
+			sdram_0_wire_dq                           : inout std_logic_vector(15 downto 0) := (others => 'X'); -- dq
+			sdram_0_wire_dqm                          : out   std_logic_vector(1 downto 0);                     -- dqm
+			sdram_0_wire_ras_n                        : out   std_logic;                                        -- ras_n
+			sdram_0_wire_we_n                         : out   std_logic;                                        -- we_n
+			switches_external_connection_export       : in    std_logic_vector(9 downto 0)  := (others => 'X'); -- export
+			ledrom_address_external_connection_export : out   std_logic_vector(8 downto 0);                     -- export
+			bluetooth_external_connection_rxd         : in    std_logic                     := 'X';             -- rxd
+			bluetooth_external_connection_txd         : out   std_logic;                                        -- txd
+			ledrom_data_external_connection_export    : out   std_logic_vector(15 downto 0);                    -- export
+			buttons_external_connection_export        : in    std_logic_vector(2 downto 0)  := (others => 'X'); -- export
+			ledrom_ena_external_connection_export     : out   std_logic;                                        -- export
+			sdram_clk_clk                             : out   std_logic;                                        -- clk
+			flash_conduit_end_ADDR                    : out   std_logic_vector(21 downto 0);                    -- ADDR
+			flash_conduit_end_CE_N                    : out   std_logic;                                        -- CE_N
+			flash_conduit_end_OE_N                    : out   std_logic;                                        -- OE_N
+			flash_conduit_end_WE_N                    : out   std_logic;                                        -- WE_N
+			flash_conduit_end_RST_N                   : out   std_logic;                                        -- RST_N
+			flash_conduit_end_DQ                      : inout std_logic_vector(7 downto 0)  := (others => 'X'); -- DQ
+			leds_external_export                      : out   std_logic_vector(9 downto 0);                     -- export
+			sdcard_external_b_SD_cmd                  : inout std_logic                     := 'X';             -- b_SD_cmd
+			sdcard_external_b_SD_dat                  : inout std_logic                     := 'X';             -- b_SD_dat
+			sdcard_external_b_SD_dat3                 : inout std_logic                     := 'X';             -- b_SD_dat3
+			sdcard_external_o_SD_clock                : out   std_logic;                                        -- o_SD_clock
+			sevenseg_external_HEX0                    : out   std_logic_vector(7 downto 0);                     -- HEX0
+			sevenseg_external_HEX1                    : out   std_logic_vector(7 downto 0);                     -- HEX1
+			sevenseg_external_HEX2                    : out   std_logic_vector(7 downto 0);                     -- HEX2
+			sevenseg_external_HEX3                    : out   std_logic_vector(7 downto 0)                      -- HEX3
+		);
+	end component testnios;
+
