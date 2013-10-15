@@ -14,6 +14,7 @@ struct coord
     size_t up;
     size_t right;
     size_t in;
+    operator
 };
 //helper functions
 bool operator==(coord lhs, coord rhs);
@@ -47,8 +48,13 @@ public:
 
 class snakeNode;
 //writes each coord found with the color at that node
+
+class snake;
+void write(snake);
+
+/*
 void write(snakeNode * h);
 //writes a single value
 void write(coord p, color c);
-
+*/
 #endif

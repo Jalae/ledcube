@@ -1,4 +1,5 @@
 
+#include <windows.h>
 #include <iostream>
 #include <string>
 #include "writeLib.h"
@@ -6,11 +7,13 @@
 
 using std::string;
 using std::cin;
+
 int main()
 {
     string s;
     snakeGame sn(8,8,1,1);
     cin >> s;
+
     sn.play(none);
     while (s != "x")
     {
@@ -31,3 +34,4 @@ int main()
         cin >> s;
     }
 }
+

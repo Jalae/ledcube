@@ -1,37 +1,9 @@
 #include <stdlib.h>
 #include "snake.h"
 
-bool operator==(coord lhs, coord rhs)
-{
-    bool u, r, i;
-    u = r = i = false;
-    u = lhs.up    == rhs.up;
-    r = lhs.right == rhs.right;
-    i = lhs.in    == rhs.in;
-    return u && r && i;
-}
-void operator+(coord & lhs, direction rhs)
-{
-    switch(rhs)
-    {
-        case up:    lhs.up + 1;
-            break;
-        case down:  lhs.up - 1;
-            break;
-        case left:  lhs.right - 1;
-            break;
-        case right: lhs.right + 1;
-            break;
-        case in:    lhs.in + 1;
-            break;
-        case out:   lhs.in - 1;
-            break;
-        case none:
-        default:    lhs;
-    }
-}
 
 ////////////////////////////////////COLOR//////////////////////////////////////
+/*
 size_t color::red()
 {
     return packedcolor && (0x001F << 0);
@@ -61,6 +33,7 @@ uint16_t color::dump()
     return packedcolor;
 }
 
+*/
 ////////////////////////////////////SNAKE//////////////////////////////////////
 snake::snake(coord c, snakeGame * m):dir(left), momma(m)
 {
@@ -159,14 +132,15 @@ int snakeGame::play(direction d)
     {
         theSnake->addNode(fruit);
         makeFruit();
-        write(theSnake->head);
+
+        //write(theSnake->head);
     }
     else
     {
-        write(theSnake->head);
-        write(old, 0);
+        //write(theSnake->head);
+        //write(old, 0);
     }
-
+    write(theSnake);
 }
 
 

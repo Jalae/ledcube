@@ -1,7 +1,10 @@
 
+#include <iostream>
+
 #include "writeLib.h"
 #include "stdlib.h"
 #include "time.h"
+
 
 
 #ifndef snakelib
@@ -15,6 +18,7 @@ class snake
     snakeGame * momma;
     direction  dir;
 public:
+friend void write(snake *);
     snakeNode* head;
     snake(coord c, snakeGame * m);
     ~snake();
@@ -31,6 +35,7 @@ public:
 class snakeNode
 {
 public:
+friend void write(snake *);
     snakeNode * m_next;
     coord m_pos;
     color m_color;
@@ -64,6 +69,7 @@ class snakeGame
     //draws the whole array
     void Draw();
 public:
+friend void write(snake *);
 
     coord randomcoord()
     {
@@ -72,6 +78,7 @@ public:
         c.up = rand() % Maxes.up;
         c.right = rand() % Maxes.right;
         c.in = rand() % Maxes.in;
+        return c;
     }
     //this function assumes the previous fruit is no longer the games
     //but rather the snakes
@@ -81,7 +88,8 @@ public:
         do
         {
             c = randomcoord();
-        } while(!theSnake->contains(c));
+            std::cout << c.up << " " << c.right << " " << c.in << "\n";
+        } while(theSnake->contains(c));
         snakeNode * temp = new snakeNode(c);
         fruit = temp;
     }
