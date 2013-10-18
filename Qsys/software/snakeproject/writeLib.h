@@ -1,15 +1,7 @@
 
-
-
-#include "alt_types.h"
-#include "altera_avalon_pio_regs.h"
-#include "sys/alt_irq.h"
-#include "system.h"
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include <stdint.h>
-
 
 #ifndef writelib
 #define writelib
@@ -26,9 +18,6 @@ struct coord
 //helper functions
 bool operator==(coord lhs, coord rhs);
 void operator+(coord & lhs, direction rhs);
-
-//use this for write
-//IOWR_16DIRECT(BASE, OFFSET, DATA)
 
 // this class will handle holding and managing colors.
 // colors are 5 bits.

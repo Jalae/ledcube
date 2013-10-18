@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 #include "snake.h"
 
@@ -27,7 +28,7 @@ void operator+(coord & lhs, direction rhs)
         case out:   lhs.in -= 1;
             break;
         case none:
-        default:    lhs;
+        default:   lhs;
     }
 }
 
@@ -168,9 +169,3 @@ int snakeGame::play(direction d)
     }
 
 }
-
-
-
-
-
-

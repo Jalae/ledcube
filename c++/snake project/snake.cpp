@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 #include "snake.h"
 
@@ -168,9 +169,3 @@ int snakeGame::play(direction d)
     }
 
 }
-
-
-
-
-
-
