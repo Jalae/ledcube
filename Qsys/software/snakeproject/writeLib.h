@@ -2,9 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+//#include <cstdint>
 
 #ifndef writelib
 #define writelib
+
 enum direction
 {
     up, down, left, right, in, out, none
@@ -25,7 +27,7 @@ void operator+(coord & lhs, direction rhs);
 // any bits given more than 5 are ignored.
 class color
 {
-    uint16_t packedcolor;
+    uint packedcolor;
 public:
     size_t red();
     void red(size_t r);
@@ -33,13 +35,17 @@ public:
     void green(size_t g);
     size_t blue();
     void blue(size_t b);
-    uint16_t dump();
+    uint dump();
     color()
     {packedcolor = 0xFFFF;}
     color(int i)
     {packedcolor = i;}
-    bool operator==(uint16_t i)
+    color(color const & c)
+    {packedcolor = c.packedcolor;}
+    bool operator==(uint i)
     { return packedcolor == i; }
+    bool operator==(color const & c)
+	{return packedcolor == c.packedcolor;}
 };
 
 //put generic code here

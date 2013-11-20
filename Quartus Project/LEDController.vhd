@@ -85,7 +85,7 @@ begin
                                     t_clk  <= '0';
                                     t_l    <= '1';
                                     t_Oena <= '0';
-                                    t_rst  <= '1';
+                                    t_rst  <= '1';--
             when setAddress    =>
                                     t_r    <= '0';
                                     t_g    <= '0';
@@ -94,7 +94,7 @@ begin
                                     t_clk  <= '1';
                                     t_l    <= '1';
                                     t_Oena <= '0';
-                                    t_rst  <= '1';
+                                    t_rst  <= '1';--
             when loadValue     =>
                                     t_r    <= '0';
                                     t_g    <= '0';
@@ -103,7 +103,7 @@ begin
                                     t_clk  <= '0';
                                     t_l    <= '1';
                                     t_Oena <= '0';
-                                    t_rst  <= '1';
+                                    t_rst  <= '1';--
             when clockLow      =>
                                     t_r    <= r_d;
                                     t_g    <= g_d;
@@ -112,7 +112,7 @@ begin
                                     t_clk  <= '0';
                                     t_l    <= '1';
                                     t_Oena <= '0';
-                                    t_rst  <= '1';
+                                    t_rst  <= '1';--
             when clockHigh     =>
                                     t_r    <= r_d;
                                     t_g    <= g_d;
@@ -121,7 +121,7 @@ begin
                                     t_clk  <= '1';
                                     t_l    <= '1';
                                     t_Oena <= '0';
-                                    t_rst  <= '1';
+                                    t_rst  <= '1';--
             when disableOutput =>
                                     t_r    <= '0';
                                     t_g    <= '0';
@@ -130,7 +130,7 @@ begin
                                     t_clk  <= '0';
                                     t_l    <= '0';
                                     t_Oena <= '1';
-                                    t_rst  <= '1';
+                                    t_rst  <= '1';--
             when latchData     =>
                                     t_r    <= '0';
                                     t_g    <= '0';
@@ -139,7 +139,7 @@ begin
                                     t_clk  <= '0';
                                     t_l    <= '1';
                                     t_Oena <= '1';
-                                    t_rst  <= '1';
+                                    t_rst  <= '1';--
             when enableOutput  => --this state is probably redundant.
                                     t_r    <= '0';
                                     t_g    <= '0';
@@ -148,7 +148,7 @@ begin
                                     t_clk  <= '0';
                                     t_l    <= '1';
                                     t_Oena <= '0';
-                                    t_rst  <= '1';
+                                    t_rst  <= '1';--
             when others        =>
                                     t_r    <= '0';
                                     t_g    <= '0';
@@ -157,11 +157,11 @@ begin
                                     t_clk  <= '0';
                                     t_l    <= '0';
                                     t_Oena <= '0';
-                                    t_rst  <= '0';
+                                    t_rst  <= '0';--
         end case;
     end process;
 
-    curgetsnext: process(clock)
+    curgetsnext: process(clock, t_r, t_g, t_b, t_cath, t_clk, t_l, t_Oena, t_rst)
     begin
         curState        := nextState;
         LEDCont_Addr    <= std_logic_vector(conv_unsigned(bitShiftCounter, 9));

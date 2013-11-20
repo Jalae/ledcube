@@ -33,7 +33,7 @@ public:
     snakeNode * m_next;
     coord m_pos;
     color m_color;
-friend snake;
+friend class snake;
     snakeNode(coord);
     snakeNode(snakeNode const & cpy);
     snakeNode & operator=(snakeNode const & cpy);
@@ -48,6 +48,11 @@ friend snake;
     {
         return m_color;
     }
+    coord getPos()
+    {
+    	return m_pos;
+    }
+
     bool check( coord const & lhs );
 };
 
@@ -71,6 +76,8 @@ public:
         c.up = rand() % Maxes.up;
         c.right = rand() % Maxes.right;
         c.in = rand() % Maxes.in;
+
+        return c;
     }
     //this function assumes the previous fruit is no longer the games
     //but rather the snakes
@@ -103,6 +110,7 @@ public:
             case in: if (c.in >= Maxes.in) c.in=0;
             break;
             case out: if (c.in <= 0) c.in=0;
+            break;
             default:
             break;
         }

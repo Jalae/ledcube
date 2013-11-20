@@ -1,8 +1,8 @@
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.all;
-USE IEEE.STD_LOGIC_ARITH.all;
-USE IEEE.STD_LOGIC_UNSIGNED.all;
-
+--USE IEEE.STD_LOGIC_ARITH.all;
+--USE IEEE.STD_LOGIC_UNSIGNED.all;
+USE IEEE.NUMERIC_STD.all;
 
 entity DE0 is
     Port (
@@ -31,8 +31,7 @@ entity DE0 is
         --///////////////////   SDRAM Interface     ///////////////
         DRAM_CLK            : out   STD_logic;                     -- SDRAM Clock
         DRAM_ADDR           : out   STD_logic_vector(11 downto 0); -- SDRAM Address bus 13 Bits
-        DRAM_BA_1           : out   STD_logic;                     -- SDRAM Bank Address 1
-        DRAM_BA_0           : out   STD_logic;                     -- SDRAM Bank Address 0
+        DRAM_BA             : out   STD_logic_vector(1  downto 0); -- SDRAM Bank Address 1
         DRAM_CAS_N          : out   STD_logic;                     -- SDRAM Column Address Strobe
         DRAM_CKE            : out   STD_logic;                     -- SDRAM Clock Enable
         DRAM_CS_N           : out   STD_logic;                     -- SDRAM Chip Select
@@ -66,10 +65,10 @@ entity DE0 is
         --//////////////////    GPIO    ///////////////////////////
         GPIO0_CLKIN         : in    STD_logic_vector(1  downto 0);  -- GPIO Connection 0 Clock In Bus
         GPIO0_CLKOUT        : out   STD_logic_vector(1  downto 0);  -- GPIO Connection 0 Clock Out Bus
-        GPIO0_D             : inout STD_logic_vector(31 downto 0); -- GPIO Connection 0 Data Bus
+        GPIO_0              : inout STD_logic_vector(31 downto 0); -- GPIO Connection 0 Data Bus
         GPIO1_CLKIN         : in    STD_logic_vector(1  downto 0);  -- GPIO Connection 1 Clock In Bus
         GPIO1_CLKOUT        : out   STD_logic_vector(1  downto 0);  -- GPIO Connection 1 Clock Out Bus
-        GPIO1_D             : inout STD_logic_vector(31 downto 0)  -- GPIO Connection 1 Data Bus
+        GPIO_1              : inout STD_logic_vector(31 downto 0)  -- GPIO Connection 1 Data Bus
 
 
     --  --//////////////////    LCD Module 16X2     ///////////////
@@ -167,7 +166,7 @@ architecture a of DE0 is
     end component LEDController;
 
     signal DRAM_DQM       : std_logic_vector (1 downto 0);
-    signal DRAM_BA        : std_logic_vector (1 downto 0);
+    signal DRAM_BA_t      : std_logic_vector (1 downto 0);
     signal BT_rxd         : std_logic;
     signal BT_txd         : std_logic;
 
@@ -192,19 +191,35 @@ architecture a of DE0 is
     signal LED_OENA_OUT   : std_logic;
     signal LED_RST_OUT    : std_logic;
 
+	 signal LEDREAD_dummy   : std_logic_vector(15 downto 0);
     begin
-    GPIO0_D(0) <= LED_RED_OUT;
-    GPIO0_D(1) <= LED_GREEN_OUT;
-    GPIO0_D(2) <= LED_BLUE_OUT;
-    GPIO0_D(3) <= LED_CATH_OUT;
-    GPIO0_D(4) <= LED_CLK_OUT;
-    GPIO0_D(5) <= LED_LATCH_OUT;
-    GPIO0_D(6) <= LED_OENA_OUT;
-    GPIO0_D(7) <= LED_RST_OUT;
+	 
+	 testcounting: process(CLOCK_50, LEDREAD_dummy)
+	 variable count : integer := 0;
+	 begin
+		if(count > 50000) then
+			count := 0;
+			LEDREAD_dummy <= std_logic_vector(unsigned(LEDREAD_dummy) + 1);
+		else
+			count := count + 1;
+			LEDREAD_dummy <= LEDREAD_dummy;
+		end if;
+		
+	 end process;
+	 
+
+    GPIO_0(0) <= LED_RED_OUT;
+    GPIO_0(1) <= LED_GREEN_OUT;
+    GPIO_0(2) <= LED_BLUE_OUT;
+    GPIO_0(3) <= LED_CATH_OUT;
+    GPIO_0(4) <= LED_CLK_OUT;
+    GPIO_0(5) <= LED_LATCH_OUT;
+    GPIO_0(6) <= LED_OENA_OUT;
+    GPIO_0(7) <= LED_RST_OUT;
     DRAM_UDQM <= DRAM_DQM(1);
     DRAM_LDQM <= DRAM_DQM(0);
-    DRAM_BA_1 <= DRAM_BA(1);
-    DRAM_BA_0 <= DRAM_BA(0);
+    DRAM_BA   <= DRAM_BA_t;
+
 
     HEX0_DP <= HEX0(7);
     HEX0_D  <= HEX0(6 downto 0);
@@ -215,7 +230,7 @@ architecture a of DE0 is
     HEX3_DP <= HEX3(7);
     HEX3_D  <= HEX3(6 downto 0);
 
-    FL_WP_N <= '0';
+    FL_WP_N   <= '0';
     FL_BYTE_N <= '0'; -- FLASH Selects 8/16-bit mode --we are in 8 bit
 
 
@@ -224,7 +239,7 @@ architecture a of DE0 is
         PORT MAP (
             clock           => CLOCK_50,
             LEDCont_Addr    => LEDREAD_addr,
-            LEDCont_Data    => LEDREAD_data,
+            LEDCont_Data    => LEDREAD_dummy, --change this back to data
 
             LEDCont_s_red   => LED_RED_OUT,
             LEDCont_s_green => LED_GREEN_OUT,
@@ -266,7 +281,7 @@ architecture a of DE0 is
             sevenseg_external_HEX3                    => HEX3,              --                                   .HEX3
 
             sdram_0_wire_addr                         => DRAM_ADDR,         --                       sdram_0_wire.addr
-            sdram_0_wire_ba                           => DRAM_BA,           --                                   .ba
+            sdram_0_wire_ba                           => DRAM_BA_t,           --                                   .ba
             sdram_0_wire_cas_n                        => DRAM_CAS_N,        --                                   .cas_n
             sdram_0_wire_cke                          => DRAM_CKE,          --                                   .cke
             sdram_0_wire_cs_n                         => DRAM_CS_N,         --                                   .cs_n

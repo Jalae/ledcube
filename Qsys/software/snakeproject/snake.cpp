@@ -2,68 +2,11 @@
 #include <stdlib.h>
 #include "snake.h"
 
-bool operator==(coord lhs, coord rhs)
-{
-    bool u, r, i;
-    u = r = i = false;
-    u = lhs.up    == rhs.up;
-    r = lhs.right == rhs.right;
-    i = lhs.in    == rhs.in;
-    return u && r && i;
-}
-void operator+(coord & lhs, direction rhs)
-{
-    switch(rhs)
-    {
-        case up:    lhs.up += 1;
-            break;
-        case down:  lhs.up -= 1;
-            break;
-        case left:  lhs.right -= 1;
-            break;
-        case right: lhs.right += 1;
-            break;
-        case in:    lhs.in += 1;
-            break;
-        case out:   lhs.in -= 1;
-            break;
-        case none:
-        default:   lhs;
-    }
-}
 
-////////////////////////////////////COLOR//////////////////////////////////////
-size_t color::red()
-{
-    return packedcolor && (0x001F << 0);
-}
-void color::red(size_t r)
-{
-    packedcolor = (r << 0) && (0x001F << 0);
-}
-size_t color::green()
-{
-    return packedcolor && (0x001F << 5);
-}
-void color::green(size_t g)
-{
-    packedcolor = (g << 5) && (0x001F << 5);
-}
-size_t color::blue()
-{
-    return packedcolor && (0x001F << 10);
-}
-void color::blue(size_t b)
-{
-    packedcolor = (b << 10) && (0x001F << 10);
-}
-uint16_t color::dump()
-{
-    return packedcolor;
-}
+
 
 ////////////////////////////////////SNAKE//////////////////////////////////////
-snake::snake(coord c, snakeGame * m):dir(left), momma(m)
+snake::snake(coord c, snakeGame * m):momma(m), dir(left)
 {
     head = new snakeNode(c);
 }
@@ -167,5 +110,5 @@ int snakeGame::play(direction d)
         write(theSnake->head);
         write(old, 0);
     }
-
+    return 1;
 }
