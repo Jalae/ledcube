@@ -1,3 +1,4 @@
+
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.all;
 USE IEEE.STD_LOGIC_ARITH.all;
@@ -49,7 +50,7 @@ architecture a of LEDController is
     shared variable b_d             : std_logic := '0';
     shared variable c_d             : std_logic := '0';
 
-    shared variable bitShiftCounter : integer range 0 to 511 := 511;
+    shared variable bitShiftCounter : integer range 0 to 512 := 511;
     shared variable iteration       : integer range 0 to 31  := 0;
 begin
     --this design will need 2 state machines one for the r g b and cathode lines and another for clk latch ena and rst.
@@ -232,23 +233,25 @@ begin
                                 else
                                     b_d       := '0';
                                 end if;
+										  
                                 if(address(5 downto 3) = "111") then
-                                    if (address(8 downto 6) = address(2 downto 0)) then
+                                    if (unsigned(address(8 downto 6)) = unsigned(address(2 downto 0))) then
                                         c_d := '1';
                                     else
                                         c_d := '0';
                                     end if;
                                 else
                                     c_d := '0';
+											
                                 end if;
 
                 when clockHigh  =>
                                 bitShiftCounter := bitShiftCounter;
                                 if(bitShiftCounter = 511) then
                                                 if (iteration = 31) then
-                                        iteration := 0;
+																	iteration := 0;
                                                 else
-                                                    iteration := iteration + 1;
+																	iteration := iteration + 1;
                                                 end if;
                                 else
                                     iteration := iteration;
